@@ -1,0 +1,14 @@
+/* style conflict remove */
+.el-select-dropdown__item span + * {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+input.el-input__inner[type="text"] {
+	height: 40px;
+}
+
+/* main style */
+.field-dialog .el-dialog__body {
+	padding: 10px;
+}
