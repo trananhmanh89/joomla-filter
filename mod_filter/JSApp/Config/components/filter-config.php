@@ -4,7 +4,6 @@
     <h4>Filter Config</h4>
     <div v-if="item" class="filter-config-inner">
         <b>Choose template</b>
-        {{item}}
         <el-select 
             :value="item.template"
             @change="changeTemplate"

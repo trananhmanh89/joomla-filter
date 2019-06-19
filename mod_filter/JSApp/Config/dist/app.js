@@ -14,10 +14,6 @@ var jcomponent = {};
 
             template: JDATA.tmpl.app,
 
-            data: {
-                value: JDATA.value,
-            },
-
             components: {
                 'filter-add': jcomponent['filter-add'],
                 'filter-list': jcomponent['filter-list'],
@@ -26,6 +22,12 @@ var jcomponent = {};
             },
 
             store: store,
+
+            computed: {
+                value: function() {
+                    return JSON.stringify(this.$store.state.value);
+                }
+            }
         });
     }
 
