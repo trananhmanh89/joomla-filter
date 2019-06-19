@@ -1,92 +1,102 @@
 {
-  "title": "Filter Horizontal",
-  "type": "filter",
-  "components": [
-    {
-      "type": "text",
-      "name": "text",
-      "title": "Text",
-      "template": "filter-item-text"
-    },
-    {
-      "type": "text",
-      "name": "text-2",
-      "title": "Text 2",
-      "template": "filter-item-text-2"
-    },
-    {
-      "type": "date",
-      "name": "date",
-      "title": "Date",
-      "template": "filter-item-date"
-    },
-    {
-      "type": "single",
-      "name": "radio",
-      "title": "Radio",
-      "template": "filter-item-radio"
-    },
-    {
-      "type": "single",
-      "name": "dropdown",
-      "title": "Dropdown",
-      "template": "filter-item-dropdown"
-    },
-    {
-      "type": "multiple",
-      "name": "dropdown-multiple",
-      "title": "Dropdown Multiple",
-      "template": "filter-item-dropdown-multiple"
-    },
-    {
-      "type": "multiple",
-      "name": "checkbox",
-      "title": "Checkbox",
-      "template": "filter-item-checkbox"
-    },
-    {
-      "type": "range",
-      "name": "range",
-      "title": "Range",
-      "template": "filter-item-range"
-    },
-    {
-      "type": "color",
-      "name": "color",
-      "title": "Color",
-      "template": "filter-item-color"
+    "title": "Filter Horizontal",
+    "type": "filter",
+    "components": [
+        {
+            "type": "text",
+            "name": "text",
+            "title": "Text",
+            "template": "filter-item-text"
+        },
+        {
+            "type": "text",
+            "name": "text-2",
+            "title": "Text 2",
+            "template": "filter-item-text-2"
+        },
+        {
+            "type": "date",
+            "name": "date",
+            "title": "Date",
+            "template": "filter-item-date"
+        },
+        {
+            "type": "single",
+            "name": "radio",
+            "title": "Radio",
+            "template": "filter-item-radio"
+        },
+        {
+            "type": "single",
+            "name": "dropdown",
+            "title": "Dropdown",
+            "template": "filter-item-dropdown"
+        },
+        {
+            "type": "multiple",
+            "name": "dropdown-multiple",
+            "title": "Dropdown Multiple",
+            "template": "filter-item-dropdown-multiple"
+        },
+        {
+            "type": "multiple",
+            "name": "checkbox",
+            "title": "Checkbox",
+            "template": "filter-item-checkbox"
+        },
+        {
+            "type": "range",
+            "name": "range",
+            "title": "Range",
+            "template": "filter-item-range"
+        },
+        {
+            "type": "range-below",
+            "name": "range-below",
+            "title": "Range Below",
+            "template": "v-filter-item-range-below"
+        },
+        {
+            "type": "color",
+            "name": "color",
+            "title": "Color",
+            "template": "filter-item-color"
+        }
+    ],
+    "defaultConfig": {
+        "text": {
+            "title": "Text",
+            "maxlength": 10
+        },
+        "date": {
+            "title": "Date",
+            "startdate": "",
+            "endate": ""
+        },
+        "single": {
+            "title": "Single",
+            "custom": "",
+            "order": ""
+        },
+        "multiple": {
+            "title": "Multiple",
+            "custom": "",
+            "order": ""
+        },
+        "range": {
+            "title": "Range",
+            "auto": true,
+            "min": 0,
+            "max": 0,
+            "step": 1
+        },
+        "range-below": {
+            "title": "Range Below",
+            "points": []
+        },    
+        "color": {
+            "title": "Color",
+            "custom": ""
+        }
     }
-  ],
-  "defaultConfig": {
-    "text": {
-      "title": "Text",
-      "maxlength": 10
-    },
-    "date": {
-      "title": "Date",
-      "startdate": "",
-      "endate": ""
-    },
-    "single": {
-      "title": "Single",
-      "custom": "",
-      "order": ""
-    },
-    "multiple": {
-      "title": "Multiple",
-      "custom": "",
-      "order": ""
-    },
-    "range": {
-      "title": "Range",
-      "auto": true,
-      "min": 0,
-      "max": 0,
-      "step": 1
-    },
-    "color": {
-      "title": "Color",
-      "custom": ""
-    }
-  }
 }
