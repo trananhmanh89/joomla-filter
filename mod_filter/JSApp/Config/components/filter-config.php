@@ -33,6 +33,24 @@
             :key="item.id"
             :item="item">
         </filter-config-date>
+
+        <filter-config-range 
+            v-if="item.type === 'range'"
+            :key="item.id"
+            :item="item">
+        </filter-config-range>
+
+        <filter-config-range-below 
+            v-if="item.type === 'range-below'"
+            :key="item.id"
+            :item="item">
+        </filter-config-range-below>
+
+        <filter-config-color 
+            v-if="item.type === 'color'"
+            :key="item.id"
+            :item="item">
+        </filter-config-color>
     </div>
 </div>
 <!-- end-template -->
@@ -45,6 +63,9 @@ jcomponent['filter-config'] = {
         'filter-config-text': jcomponent['filter-config-text'],
         'filter-config-selection': jcomponent['filter-config-selection'],
         'filter-config-date': jcomponent['filter-config-date'],
+        'filter-config-range': jcomponent['filter-config-range'],
+        'filter-config-range-below': jcomponent['filter-config-range-below'],
+        'filter-config-color': jcomponent['filter-config-color'],
     },
 
     computed: {

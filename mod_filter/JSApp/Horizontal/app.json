@@ -91,7 +91,7 @@
         },    
         "color": {
             "title": "Color",
-            "custom": ""
+            "custom": []
         }
     }
 }

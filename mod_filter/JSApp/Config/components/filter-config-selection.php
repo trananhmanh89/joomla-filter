@@ -1,32 +1,38 @@
 <?php defined('_JEXEC') or die('Restricted access'); ?>
 <!-- start-template -->
 <div class="filter-config-selection">
-    <b>Title</b>
-    <el-input
-        placeholder="Title"
-        :value="item.config.title"
-        @input="updateTitle">
-    </el-input>
+    <div>
+        <p>Title</p>
+        <el-input
+            placeholder="Title"
+            :value="item.config.title"
+            @input="updateTitle">
+        </el-input>
+    </div>
 
-    <b>Custom value</b>
-    <el-input
-        placeholder="Custom value"
-        :value="item.config.custom"
-        @input="updateCustomValue">
-    </el-input>
+    <div>
+        <p>Custom value</p>
+        <el-input
+            placeholder="Custom value"
+            :value="item.config.custom"
+            @input="updateCustomValue">
+        </el-input>
+    </div>
 
-    <b>Value ordering</b>
-    <el-select 
-        placeholder="Select" 
-        :value="item.config.ordering" 
-        @change="updateOrdering">
-        <el-option
-            v-for="option in orderOptions"
-            :key="option.value"
-            :label="option.text"
-            :value="option.value">
-        </el-option>
-    </el-select>
+    <div>
+        <p>Value ordering</p>
+        <el-select 
+            placeholder="Select" 
+            :value="item.config.ordering" 
+            @change="updateOrdering">
+            <el-option
+                v-for="option in orderOptions"
+                :key="option.value"
+                :label="option.text"
+                :value="option.value">
+            </el-option>
+        </el-select>
+    </div>
 
 </div>
 <!-- end-template -->

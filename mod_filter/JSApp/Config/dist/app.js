@@ -114,6 +114,36 @@ jcomponent['filter-app'] = {
     }
 }
 
+jcomponent['filter-config-color'] = {
+    template: JDATA.tmpl['filter-config-color'],
+
+    components: {
+        'filter-config-point': jcomponent['filter-config-point'],
+    },
+
+    props: {
+        item: Object
+    },
+
+    methods: {
+        updateTitle: function(value) {
+            this.$store.commit('updateConfig', {
+                id: this.item.id,
+                name: 'title',
+                value: value,
+            });
+        },
+
+        updatePoint: function(points) {
+            this.$store.commit('updateConfig', {
+                id: this.item.id,
+                name: 'points',
+                value: points,
+            });
+        }
+    },
+};
+
 jcomponent['filter-config-date'] = {
     template: JDATA.tmpl['filter-config-date'],
 
@@ -152,6 +182,119 @@ jcomponent['filter-config-date'] = {
             this.$store.commit('updateConfig', {
                 id: this.item.id,
                 name: 'endate',
+                value: value,
+            });
+        },
+    }
+};
+
+jcomponent['filter-config-point'] = {
+    template: JDATA.tmpl['filter-config-point'],
+
+    props: {
+        points: Array,
+    },
+
+    data: function() {
+        var list = $.extend(true, [], this.points);
+        return {
+            list: list,
+        }
+    },
+
+    methods: {
+        addPoint: function() {
+            this.list.push('0');
+            this.$emit('change', $.extend(true, [], this.list));
+        },
+
+        updatePoint: function() {
+            this.$emit('change', $.extend(true, [], this.list));
+        }
+    },
+};
+
+jcomponent['filter-config-range-below'] = {
+    template: JDATA.tmpl['filter-config-range-below'],
+
+    components: {
+        'filter-config-point': jcomponent['filter-config-point'],
+    },
+
+    props: {
+        item: Object
+    },
+
+    methods: {
+        updateTitle: function(value) {
+            this.$store.commit('updateConfig', {
+                id: this.item.id,
+                name: 'title',
+                value: value,
+            });
+        },
+
+        updatePoint: function(points) {
+            this.$store.commit('updateConfig', {
+                id: this.item.id,
+                name: 'points',
+                value: points,
+            });
+        }
+    },
+};
+
+jcomponent['filter-config-range'] = {
+    template: JDATA.tmpl['filter-config-range'],
+
+    props: {
+        item: Object
+    },
+
+    data: function() {
+        var auto = this.item.config.auto;
+        return {
+            auto: auto,
+        }
+    },
+
+    methods: {
+        updateTitle: function(value) {
+            this.$store.commit('updateConfig', {
+                id: this.item.id,
+                name: 'title',
+                value: value,
+            });
+        },
+
+        updateAutoDetect: function(value) {
+            this.$store.commit('updateConfig', {
+                id: this.item.id,
+                name: 'auto',
+                value: value,
+            });
+        },
+
+        updateMin: function(value) {
+            this.$store.commit('updateConfig', {
+                id: this.item.id,
+                name: 'min',
+                value: value,
+            });
+        },
+
+        updateMax: function(value) {
+            this.$store.commit('updateConfig', {
+                id: this.item.id,
+                name: 'max',
+                value: value,
+            });
+        },
+
+        updateStep: function(value) {
+            this.$store.commit('updateConfig', {
+                id: this.item.id,
+                name: 'step',
                 value: value,
             });
         },
@@ -258,6 +401,9 @@ jcomponent['filter-config'] = {
         'filter-config-text': jcomponent['filter-config-text'],
         'filter-config-selection': jcomponent['filter-config-selection'],
         'filter-config-date': jcomponent['filter-config-date'],
+        'filter-config-range': jcomponent['filter-config-range'],
+        'filter-config-range-below': jcomponent['filter-config-range-below'],
+        'filter-config-color': jcomponent['filter-config-color'],
     },
 
     computed: {

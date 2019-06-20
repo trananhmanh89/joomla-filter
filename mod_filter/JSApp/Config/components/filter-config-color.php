@@ -1,6 +1,6 @@
 <?php defined('_JEXEC') or die('Restricted access'); ?>
 <!-- start-template -->
-<div class="filter-config-text">
+<div class="filter-config-color">
     <div>
         <p>Title</p>
         <el-input
@@ -11,19 +11,22 @@
     </div>
 
     <div>
-        <p>Max Length</p>
-        <el-input
-            placeholder="Max Length"
-            :value="item.config.maxlength"
-            @input="updateMaxLength">
-        </el-input>
+        <p>Color</p>
+        <filter-config-point 
+            :points="item.config.custom"
+            @change="updatePoint">
+        </filter-config-point>
     </div>
 </div>
 <!-- end-template -->
 
 <script>
-jcomponent['filter-config-text'] = {
-    template: JDATA.tmpl['filter-config-text'],
+jcomponent['filter-config-color'] = {
+    template: JDATA.tmpl['filter-config-color'],
+
+    components: {
+        'filter-config-point': jcomponent['filter-config-point'],
+    },
 
     props: {
         item: Object
@@ -38,13 +41,13 @@ jcomponent['filter-config-text'] = {
             });
         },
 
-        updateMaxLength: function(value) {
+        updatePoint: function(points) {
             this.$store.commit('updateConfig', {
                 id: this.item.id,
-                name: 'maxlength',
-                value: value,
+                name: 'points',
+                value: points,
             });
         }
-    }
+    },
 };
 </script>
