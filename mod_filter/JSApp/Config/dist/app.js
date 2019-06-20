@@ -114,6 +114,50 @@ jcomponent['filter-app'] = {
     }
 }
 
+jcomponent['filter-config-date'] = {
+    template: JDATA.tmpl['filter-config-date'],
+
+    props: {
+        item: Object
+    },
+
+    data: function() {
+        var startdate = this.item.config.startdate;
+        var endate = this.item.config.endate;
+
+        return {
+            startdate: startdate,
+            endate: endate
+        }
+    },
+
+    methods: {
+        updateTitle: function(value) {
+            this.$store.commit('updateConfig', {
+                id: this.item.id,
+                name: 'title',
+                value: value,
+            });
+        },
+
+        updateStartDate: function(value) {
+            this.$store.commit('updateConfig', {
+                id: this.item.id,
+                name: 'startdate',
+                value: value,
+            });
+        },
+
+        updateEndDate: function(value) {
+            this.$store.commit('updateConfig', {
+                id: this.item.id,
+                name: 'endate',
+                value: value,
+            });
+        },
+    }
+};
+
 jcomponent['filter-config-selection'] = {
     template: JDATA.tmpl['filter-config-selection'],
 
@@ -213,6 +257,7 @@ jcomponent['filter-config'] = {
     components: {
         'filter-config-text': jcomponent['filter-config-text'],
         'filter-config-selection': jcomponent['filter-config-selection'],
+        'filter-config-date': jcomponent['filter-config-date'],
     },
 
     computed: {
@@ -381,7 +426,7 @@ var getAppStore = function getAppStore(JDATA) {
 
                 Vue.set(item, 'template', payload.template);
                 Vue.set(item, 'type', component.type);
-                Vue.set(item, 'config', $.extend(true, {}, config[component.type]));
+                Vue.set(item, 'config', $.extend(true, {}, config[component.type], item.config));
             },
 
             updateConfig: function(state, payload) {

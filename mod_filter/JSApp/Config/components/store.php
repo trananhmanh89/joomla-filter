@@ -109,7 +109,7 @@ var getAppStore = function getAppStore(JDATA) {
 
                 Vue.set(item, 'template', payload.template);
                 Vue.set(item, 'type', component.type);
-                Vue.set(item, 'config', $.extend(true, {}, config[component.type]));
+                Vue.set(item, 'config', $.extend(true, {}, config[component.type], item.config));
             },
 
             updateConfig: function(state, payload) {

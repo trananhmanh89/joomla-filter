@@ -26,8 +26,13 @@
             v-if="item.type === 'selection'"
             :key="item.id"
             :item="item">
-            
         </filter-config-selection>
+
+        <filter-config-date 
+            v-if="item.type === 'date'"
+            :key="item.id"
+            :item="item">
+        </filter-config-date>
     </div>
 </div>
 <!-- end-template -->
@@ -39,6 +44,7 @@ jcomponent['filter-config'] = {
     components: {
         'filter-config-text': jcomponent['filter-config-text'],
         'filter-config-selection': jcomponent['filter-config-selection'],
+        'filter-config-date': jcomponent['filter-config-date'],
     },
 
     computed: {

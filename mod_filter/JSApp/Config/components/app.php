@@ -1,8 +1,8 @@
 <?php defined('_JEXEC') or die('Restricted access'); ?>
 <!-- start-template -->
-<div id="config-app">
+<div id="config-app" style="height: 800px;">
     <textarea 
-        style="width: 100%; display: none;" 
+        style="width: 100%;" 
         rows="5" 
         name="jform[params][config]" 
         id="jform_params_config">{{value}}</textarea>
