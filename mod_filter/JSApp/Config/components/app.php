@@ -2,11 +2,10 @@
 <!-- start-template -->
 <div id="config-app">
     <textarea 
-        style="width: 100%;" 
+        style="width: 100%; display: none;" 
         rows="5" 
         name="jform[params][config]" 
         id="jform_params_config">{{value}}</textarea>
-    <hr>
     <div class="filter-wrapper">
         <filter-app></filter-app>
         <filter-add></filter-add>
@@ -26,36 +25,37 @@
 <!-- end-template -->
 
 <script>
-    var jcomponent = {};
-    var JDATA = Joomla.getOptions('<?php echo $this->id ?>');
+var jcomponent = {};
+var JDATA = Joomla.getOptions('<?php echo $this->id ?>');
 
-    var initApp = function initApp() {
-        var store = getAppStore(JDATA);
-        Vue.prototype._ = function _ (str) {
-            return Joomla.JText._(str);
-        }
-        
-        new Vue({
-            el: '#' + JDATA.element,
+var initApp = function initApp() {
+    var store = getAppStore(JDATA);
 
-            template: JDATA.tmpl.app,
-
-            components: {
-                'filter-add': jcomponent['filter-add'],
-                'filter-list': jcomponent['filter-list'],
-                'filter-config': jcomponent['filter-config'],
-                'filter-app': jcomponent['filter-app'],
-            },
-
-            store: store,
-
-            computed: {
-                value: function() {
-                    return JSON.stringify(this.$store.state.value);
-                }
-            }
-        });
+    Vue.prototype.$jtext = function (str) {
+        return Joomla.JText._(str);
     }
+    
+    new Vue({
+        el: '#' + JDATA.element,
 
-    window.initApp<?php echo $this->id ?> = initApp;
+        template: JDATA.tmpl.app,
+
+        components: {
+            'filter-add': jcomponent['filter-add'],
+            'filter-list': jcomponent['filter-list'],
+            'filter-config': jcomponent['filter-config'],
+            'filter-app': jcomponent['filter-app'],
+        },
+
+        store: store,
+
+        computed: {
+            value: function() {
+                return JSON.stringify(this.$store.state.value);
+            }
+        }
+    });
+}
+
+window.initApp<?php echo $this->id ?> = initApp;
 </script>

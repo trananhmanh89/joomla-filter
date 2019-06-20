@@ -15,39 +15,39 @@
 <!-- end-template -->
 
 <script>
-    jcomponent['filter-list'] = {
-        template: JDATA.tmpl['filter-list'],
+jcomponent['filter-list'] = {
+    template: JDATA.tmpl['filter-list'],
 
-        components: {
-            'filter-list-item': jcomponent['filter-list-item']
+    components: {
+        'filter-list-item': jcomponent['filter-list-item']
+    },
+
+    computed: {
+        list: function() {
+            return this.$store.state.value.filters;
         },
 
-        computed: {
-            list: function() {
-                return this.$store.state.value.filters;
-            },
+        active: function() {
+            return this.$store.state.activeFilter;
+        },
+    },
 
-            active: function() {
-                return this.$store.state.activeFilter;
-            },
+    methods: {
+        setActive: function(id) {
+            this.$store.commit('setActiveFilter', id);
         },
 
-        methods: {
-            setActive: function(id) {
-                this.$store.commit('setActiveFilter', id);
-            },
+        duplicateFilter: function(filter) {
+            this.$store.commit('duplicateFilter', filter);
+        },
 
-            duplicateFilter: function(filter) {
-                this.$store.commit('duplicateFilter', filter);
-            },
-
-            deleteFilter: function(id) {
-                if (this.active === id) {
-                    this.$store.commit('setActiveFilter', '');
-                }
-
-                this.$store.commit('deleteFilter', id);
+        deleteFilter: function(id) {
+            if (this.active === id) {
+                this.$store.commit('setActiveFilter', '');
             }
+
+            this.$store.commit('deleteFilter', id);
         }
-    };
+    }
+};
 </script>

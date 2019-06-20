@@ -25,31 +25,31 @@
 <!-- end-template -->
 
 <script>
-    jcomponent['filter-config'] = {
-        template: JDATA.tmpl['filter-config'],
+jcomponent['filter-config'] = {
+    template: JDATA.tmpl['filter-config'],
 
-        components: {
-            'filter-config-text': jcomponent['filter-config-text']
+    components: {
+        'filter-config-text': jcomponent['filter-config-text']
+    },
+
+    computed: {
+        item: function () {
+            var activeFilter = this.$store.state.activeFilter;
+            var filters = this.$store.state.value.filters;
+
+            return filters.find(function(filter) {
+                return filter.id === activeFilter;
+            });
         },
+    },
 
-        computed: {
-            item: function () {
-                var activeFilter = this.$store.state.activeFilter;
-                var filters = this.$store.state.value.filters;
-
-                return filters.find(function(filter) {
-                    return filter.id === activeFilter;
-                });
-            },
-        },
-
-        methods: {
-            changeTemplate: function (value) {
-                this.$store.commit('changeFilterTemplate', {
-                    id: this.item.id,
-                    template: value,
-                });
-            }
+    methods: {
+        changeTemplate: function (value) {
+            this.$store.commit('changeFilterTemplate', {
+                id: this.item.id,
+                template: value,
+            });
         }
-    };
+    }
+};
 </script>
