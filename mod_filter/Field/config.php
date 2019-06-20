@@ -126,19 +126,19 @@ class JFormFieldConfig extends JFormField
                 'group' => 'base',
                 'name' => 'base-featured',
                 'title' => 'Featured',
-                'filterTypes' => array('single', 'multiple')
+                'filterTypes' => array('selection')
             ),
             array(
                 'group' => 'base',
                 'name' => 'base-cat',
                 'title' => 'Category',
-                'filterTypes' => array('single', 'multiple')
+                'filterTypes' => array('selection')
             ),
             array(
                 'group' => 'base',
                 'name' => 'base-tag',
                 'title' => 'Tag',
-                'filterTypes' => array('single', 'multiple')
+                'filterTypes' => array('selection')
             ),
             array(
                 'group' => 'base',
@@ -184,7 +184,7 @@ class JFormFieldConfig extends JFormField
             }
 
             if ($item->type === 'checkboxes' || $item->type === 'radio' || $item->type === 'list') {
-                $field['filterTypes'] = array('single', 'multiple');
+                $field['filterTypes'] = array('selection');
             }
 
             if ($item->type === 'color') {

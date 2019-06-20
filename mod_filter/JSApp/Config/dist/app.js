@@ -1,4 +1,5 @@
 (function($) { 
+'use strict';
 
 var jcomponent = {};
 var JDATA = Joomla.getOptions('Config_admin_config_app');
@@ -113,6 +114,73 @@ jcomponent['filter-app'] = {
     }
 }
 
+jcomponent['filter-config-selection'] = {
+    template: JDATA.tmpl['filter-config-selection'],
+
+    props: {
+        item: Object
+    },
+
+    data: function() {
+        var orderOptions = [
+            {
+                text: 'Ordering ASC',
+                value: 'ordering_asc',
+            },
+            {
+                text: 'Ordering DESC',
+                value: 'ordering_desc',
+            },
+            {
+                text: 'Count ASC',
+                value: 'count_asc',
+            },
+            {
+                text: 'Count DESC',
+                value: 'count_desc',
+            },
+            {
+                text: 'Name ASC',
+                value: 'name_asc',
+            },
+            {
+                text: 'Name DESC',
+                value: 'name_desc',
+            },
+        ];
+
+        return {
+            orderOptions: orderOptions,
+        }
+    },
+
+    methods: {
+        updateTitle: function(value) {
+            this.$store.commit('updateConfig', {
+                id: this.item.id,
+                name: 'title',
+                value: value,
+            });
+        },
+
+        updateCustomValue: function(value) {
+            this.$store.commit('updateConfig', {
+                id: this.item.id,
+                name: 'custom',
+                value: value,
+            });
+        },
+
+        updateOrdering: function(value) {
+            this.$store.commit('updateConfig', {
+                id: this.item.id,
+                name: 'ordering',
+                value: value,
+            });
+        }
+    }
+};
+
 jcomponent['filter-config-text'] = {
     template: JDATA.tmpl['filter-config-text'],
 
@@ -143,7 +211,8 @@ jcomponent['filter-config'] = {
     template: JDATA.tmpl['filter-config'],
 
     components: {
-        'filter-config-text': jcomponent['filter-config-text']
+        'filter-config-text': jcomponent['filter-config-text'],
+        'filter-config-selection': jcomponent['filter-config-selection'],
     },
 
     computed: {

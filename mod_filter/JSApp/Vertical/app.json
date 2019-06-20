@@ -21,25 +21,25 @@
             "template": "v-filter-item-date"
         },
         {
-            "type": "single",
+            "type": "selection",
             "name": "radio",
             "title": "Radio",
             "template": "v-filter-item-radio"
         },
         {
-            "type": "single",
+            "type": "selection",
             "name": "dropdown",
             "title": "Dropdown",
             "template": "v-filter-item-dropdown"
         },
         {
-            "type": "multiple",
+            "type": "selection",
             "name": "dropdown-multiple",
             "title": "Dropdown Multiple",
             "template": "v-filter-item-dropdown-multiple"
         },
         {
-            "type": "multiple",
+            "type": "selection",
             "name": "checkbox",
             "title": "Checkbox",
             "template": "v-filter-item-checkbox"
@@ -73,15 +73,10 @@
             "startdate": "",
             "endate": ""
         },
-        "single": {
-            "title": "Single",
+        "selection": {
+            "title": "Selection",
             "custom": "",
-            "order": ""
-        },
-        "multiple": {
-            "title": "Multiple",
-            "custom": "",
-            "order": ""
+            "ordering": "ordering_asc"
         },
         "range": {
             "title": "Range",

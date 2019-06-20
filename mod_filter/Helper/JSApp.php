@@ -129,7 +129,7 @@ class JSApp
         $version = '';
         if ($this->devMode || !$compiled) {
             $version = '?v=' . time();
-            $js = "(function($) { \n";
+            $js = "(function($) { \n'use strict';\n";
             $tmpl = array();
             foreach ($this->files as $file) {
                 $info = pathinfo($file);

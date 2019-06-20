@@ -15,11 +15,19 @@
                 :value="component.template">
             </el-option>
         </el-select>
+
         <filter-config-text 
             v-if="item.type === 'text'"
             :key="item.id"
             :item="item">
         </filter-config-text>
+
+        <filter-config-selection 
+            v-if="item.type === 'selection'"
+            :key="item.id"
+            :item="item">
+            
+        </filter-config-selection>
     </div>
 </div>
 <!-- end-template -->
@@ -29,7 +37,8 @@ jcomponent['filter-config'] = {
     template: JDATA.tmpl['filter-config'],
 
     components: {
-        'filter-config-text': jcomponent['filter-config-text']
+        'filter-config-text': jcomponent['filter-config-text'],
+        'filter-config-selection': jcomponent['filter-config-selection'],
     },
 
     computed: {
