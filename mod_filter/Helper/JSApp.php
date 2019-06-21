@@ -42,7 +42,7 @@ class JSApp
 
     protected $name = '';
     protected $id = '';
-    protected $devMode = false;
+    protected $devmode = false;
     protected $element = '';
     protected $data = array();
     protected $paths = array();
@@ -57,7 +57,6 @@ class JSApp
         $id = OutputFilter::stringUrlSafe($this->element);
         $id = str_replace('-', '_', $id);
         $this->id = ucfirst($name) . '_' . $id;
-        $this->devMode = true;
 
         $app = \JFactory::getApplication();
         $templatePath = JPATH_BASE . '/templates/' . $app->getTemplate() . '/html/layouts/JSApp/' . $this->name;
@@ -91,6 +90,7 @@ class JSApp
 
     public function render($data)
     {
+        $this->devmode = !empty($data['value']->devmode);
         $this->data = $data;
         $this->data['element'] = $this->element;
         $this->loadBaseAssets();
@@ -106,7 +106,7 @@ class JSApp
         \JHtml::_('behavior.core');
 
         $doc = \JFactory::getDocument();
-        if ($this->devMode) {
+        if ($this->devmode) {
             $doc->addScript(\JUri::root(true) . '/modules/mod_filter/Asset/vue/vue.js');
             if (in_array('store.php', $this->files)) {
                 $doc->addScript(\JUri::root(true) . '/modules/mod_filter/Asset/vue/vuex.js');
@@ -127,7 +127,7 @@ class JSApp
         $doc = \JFactory::getDocument();
         $compiled = file_exists($this->appPath . '/dist/app.js') && file_exists($this->appPath . '/dist/tmpl.json');
         $version = '';
-        if ($this->devMode || !$compiled) {
+        if ($this->devmode || !$compiled) {
             $version = '?v=' . time();
             $js = "(function($) { \n'use strict';\n";
             $tmpl = array();

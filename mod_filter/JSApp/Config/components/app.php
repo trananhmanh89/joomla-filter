@@ -7,6 +7,7 @@
         name="jform[params][config]" 
         id="jform_params_config">{{value}}</textarea>
     <div class="filter-wrapper">
+        <filter-devmode></filter-devmode>
         <filter-app></filter-app>
         <filter-add></filter-add>
         <hr style="clear: both;">
@@ -45,6 +46,7 @@ var initApp = function initApp() {
             'filter-list': jcomponent['filter-list'](),
             'filter-config': jcomponent['filter-config'](),
             'filter-app': jcomponent['filter-app'](),
+            'filter-devmode': jcomponent['filter-devmode'](),
         },
 
         store: store,

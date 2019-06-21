@@ -5,6 +5,7 @@ var getAppStore = function getAppStore(JDATA) {
         true, {
             appid: JDATA.apps[0].id,
             filters: [],
+            devmode: false,
         },
         JDATA.value
     );
@@ -30,6 +31,10 @@ var getAppStore = function getAppStore(JDATA) {
         },
 
         mutations: {
+            updateDevMode: function(state, value) {
+                Vue.set(state.value, 'devmode', value);
+            },
+
             addFilter: function(state, field) {
                 var app = state.apps.find(function(a) {
                     return a.id === state.value.appid;

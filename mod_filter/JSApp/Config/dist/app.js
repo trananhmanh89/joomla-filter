@@ -21,6 +21,7 @@ var initApp = function initApp() {
             'filter-list': jcomponent['filter-list'](),
             'filter-config': jcomponent['filter-config'](),
             'filter-app': jcomponent['filter-app'](),
+            'filter-devmode': jcomponent['filter-devmode'](),
         },
 
         store: store,
@@ -510,6 +511,24 @@ jcomponent['filter-config'] = function() {
     }
 };
 
+jcomponent['filter-devmode'] = function() {
+    return {
+        template: JDATA.tmpl['filter-devmode'],
+
+        computed: {
+            devmode: function () {
+                return !!this.$store.state.value.devmode;
+            },
+        },
+
+        methods: {
+            changeDevMode: function (value) {
+                this.$store.commit('updateDevMode', value);
+            }
+        }
+    }
+}
+
 jcomponent['filter-list'] = function() {
     return {
         template: JDATA.tmpl['filter-list'],
@@ -553,6 +572,7 @@ var getAppStore = function getAppStore(JDATA) {
         true, {
             appid: JDATA.apps[0].id,
             filters: [],
+            devmode: false,
         },
         JDATA.value
     );
@@ -578,6 +598,10 @@ var getAppStore = function getAppStore(JDATA) {
         },
 
         mutations: {
+            updateDevMode: function(state, value) {
+                Vue.set(state.value, 'devmode', value);
+            },
+
             addFilter: function(state, field) {
                 var app = state.apps.find(function(a) {
                     return a.id === state.value.appid;
