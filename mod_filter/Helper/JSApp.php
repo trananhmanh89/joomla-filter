@@ -120,6 +120,8 @@ class JSApp
 
         $doc->addStyleSheet(\JUri::root(true) . '/modules/mod_filter/Asset/element-ui/index.css');
         $doc->addScript(\JUri::root(true) . '/modules/mod_filter/Asset/element-ui/index.js');
+        $doc->addScript(\JUri::root(true) . '/modules/mod_filter/Asset/sortable/Sortable.min.js');
+        $doc->addScript(\JUri::root(true) . '/modules/mod_filter/Asset/sortable/vuedraggable.umd.min.js');
     }
 
     protected function loadAppAssets()

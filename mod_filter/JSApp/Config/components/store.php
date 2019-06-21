@@ -82,6 +82,11 @@ var getAppStore = function getAppStore(JDATA) {
                 state.value.filters.push(clone);
             },
 
+            updateFilterList: function(state, items) {
+                var value = state.value;
+                Vue.set(value, 'filters', items);
+            },
+
             changeFilterApp: function(state, value) {
                 state.value.appid = value;
                 state.activeFilterId = '';

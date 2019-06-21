@@ -10,7 +10,7 @@ var initApp = function initApp() {
     Vue.prototype.$jtext = function (str) {
         return Joomla.JText._(str);
     }
-    
+
     new Vue({
         el: '#' + JDATA.element,
 
@@ -534,17 +534,38 @@ jcomponent['filter-list'] = function() {
         template: JDATA.tmpl['filter-list'],
 
         components: {
-            'filter-list-item': jcomponent['filter-list-item']
+            'filter-draggable': window.vuedraggable,
+        },
+
+        data: function() {
+            return {
+                drag: false,
+            }
         },
 
         computed: {
-            list: function() {
-                return this.$store.state.value.filters;
+            list: {
+                get: function() {
+                    return this.$store.state.value.filters;
+                },
+
+                set: function(items) {
+                    this.$store.commit('updateFilterList', items);
+                }
             },
 
             active: function() {
                 return this.$store.state.activeFilterId;
             },
+
+            dragOptions() {
+                return {
+                    animation: 200,
+                    group: "description",
+                    disabled: false,
+                    ghostClass: "ghost"
+                };
+            }
         },
 
         methods: {
@@ -562,7 +583,7 @@ jcomponent['filter-list'] = function() {
                 }
 
                 this.$store.commit('deleteFilter', id);
-            }
+            },
         }
     }
 };
@@ -647,6 +668,11 @@ var getAppStore = function getAppStore(JDATA) {
                 };
 
                 state.value.filters.push(clone);
+            },
+
+            updateFilterList: function(state, items) {
+                var value = state.value;
+                Vue.set(value, 'filters', items);
             },
 
             changeFilterApp: function(state, value) {

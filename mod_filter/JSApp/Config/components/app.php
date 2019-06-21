@@ -35,7 +35,7 @@ var initApp = function initApp() {
     Vue.prototype.$jtext = function (str) {
         return Joomla.JText._(str);
     }
-    
+
     new Vue({
         el: '#' + JDATA.element,
 
