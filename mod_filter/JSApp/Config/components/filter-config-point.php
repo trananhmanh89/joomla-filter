@@ -11,35 +11,47 @@
         <input 
             type="number" 
             v-model="list[index]"
-            @input="updatePoint">
+            @input="updatePoint" />
+        <el-button 
+            type="danger" 
+            size="mini"
+            icon="el-icon-delete" 
+            circle @click="removePoint(index)"></el-button>
     </div>
 </div>
 <!-- end-template -->
 
 <script>
-jcomponent['filter-config-point'] = {
-    template: JDATA.tmpl['filter-config-point'],
+jcomponent['filter-config-point'] = function() {
+    return {
+        template: JDATA.tmpl['filter-config-point'],
 
-    props: {
-        points: Array,
-    },
-
-    data: function() {
-        var list = $.extend(true, [], this.points);
-        return {
-            list: list,
-        }
-    },
-
-    methods: {
-        addPoint: function() {
-            this.list.push('0');
-            this.$emit('change', $.extend(true, [], this.list));
+        props: {
+            points: Array,
         },
 
-        updatePoint: function() {
-            this.$emit('change', $.extend(true, [], this.list));
-        }
-    },
+        data: function() {
+            var list = $.extend(true, [], this.points);
+            return {
+                list: list,
+            }
+        },
+
+        methods: {
+            addPoint: function() {
+                this.list.push('0');
+                this.$emit('change', $.extend(true, [], this.list));
+            },
+
+            updatePoint: function() {
+                this.$emit('change', $.extend(true, [], this.list));
+            },
+
+            removePoint: function(index) {
+                this.list.splice(index, 1);
+                this.$emit('change', $.extend(true, [], this.list));
+            }
+        },
+    }
 };
 </script>

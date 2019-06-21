@@ -17,10 +17,10 @@ var initApp = function initApp() {
         template: JDATA.tmpl.app,
 
         components: {
-            'filter-add': jcomponent['filter-add'],
-            'filter-list': jcomponent['filter-list'],
-            'filter-config': jcomponent['filter-config'],
-            'filter-app': jcomponent['filter-app'],
+            'filter-add': jcomponent['filter-add'](),
+            'filter-list': jcomponent['filter-list'](),
+            'filter-config': jcomponent['filter-config'](),
+            'filter-app': jcomponent['filter-app'](),
         },
 
         store: store,
@@ -35,430 +35,457 @@ var initApp = function initApp() {
 
 window.initAppConfig_admin_config_app = initApp;
 
-jcomponent['filter-add'] = {
-    template: JDATA.tmpl['filter-add'],
-    
-    data: function() {
-        return {
-            dialogVisible: false,
-            categoryId: 'all',
-        };
-    },
-
-    computed: {
-        baseFields: function() {
-            var fields = this.$store.state.fields;
-
-            return fields.filter(function(field) {
-                return field.group === 'base';
-            });
+jcomponent['filter-add'] = function() {
+    return {
+        template: JDATA.tmpl['filter-add'],
+        
+        data: function() {
+            return {
+                dialogVisible: false,
+                categoryId: 'all',
+            };
         },
 
-        customFields: function() {
-            var fields = this.$store.state.fields;
-            var categoryId = this.categoryId;
-            return fields.filter(function(field) {
-                if (field.group !== 'custom') {
-                    return false;
+        computed: {
+            baseFields: function() {
+                var fields = this.$store.state.fields;
+
+                return fields.filter(function(field) {
+                    return field.group === 'base';
+                });
+            },
+
+            customFields: function() {
+                var fields = this.$store.state.fields;
+                var categoryId = this.categoryId;
+                return fields.filter(function(field) {
+                    if (field.group !== 'custom') {
+                        return false;
+                    }
+
+                    return categoryId === 'all' 
+                        || !field.category.length 
+                        || field.category.indexOf(categoryId) > -1;
+                });
+            },
+
+            categories: function() {
+                return this.$store.state.categories;
+            },
+
+            added: function() {
+                var filters = this.$store.state.value.filters;
+                var added = filters.map(function(item) {
+                    return item.name;
+                });
+
+                return added;
+            }
+        },
+
+        methods: {
+            addFilter: function(field) {
+                if (this.added.indexOf(field.name) === -1) {
+                    this.$store.commit('addFilter', field);
                 }
-
-                return categoryId === 'all' 
-                    || !field.category.length 
-                    || field.category.indexOf(categoryId) > -1;
-            });
-        },
-
-        categories: function() {
-            return this.$store.state.categories;
-        },
-
-        added: function() {
-            var filters = this.$store.state.value.filters;
-            var added = filters.map(function(item) {
-                return item.name;
-            });
-
-            return added;
-        }
-    },
-
-    methods: {
-        addFilter: function(field) {
-            if (this.added.indexOf(field.name) === -1) {
-                this.$store.commit('addFilter', field);
             }
         }
     }
 };
 
-jcomponent['filter-app'] = {
-    template: JDATA.tmpl['filter-app'],
+jcomponent['filter-app'] = function() {
+    return {
+        template: JDATA.tmpl['filter-app'],
 
-    data: function () {
-        var appid = this.$store.state.value.appid;
-        return {
-            appid: appid,
-        }
-    },
-
-    computed: {
-        apps: function () {
-            return this.$store.state.apps;
+        data: function () {
+            var appid = this.$store.state.value.appid;
+            return {
+                appid: appid,
+            }
         },
-    },
 
-    methods: {
-        changeFilterApp: function () {
-            this.$store.commit('changeFilterApp', this.appid);
+        computed: {
+            apps: function () {
+                return this.$store.state.apps;
+            },
+        },
+
+        methods: {
+            changeFilterApp: function () {
+                this.$store.commit('changeFilterApp', this.appid);
+            }
         }
     }
 }
 
-jcomponent['filter-config-color'] = {
-    template: JDATA.tmpl['filter-config-color'],
+jcomponent['filter-config-color'] = function() {
+    return {
+        template: JDATA.tmpl['filter-config-color'],
 
-    components: {
-        'filter-config-point': jcomponent['filter-config-point'],
-    },
-
-    props: {
-        item: Object
-    },
-
-    methods: {
-        updateTitle: function(value) {
-            this.$store.commit('updateConfig', {
-                id: this.item.id,
-                name: 'title',
-                value: value,
-            });
+        components: {
+            'filter-config-point': jcomponent['filter-config-point'](),
         },
 
-        updatePoint: function(points) {
-            this.$store.commit('updateConfig', {
-                id: this.item.id,
-                name: 'points',
-                value: points,
-            });
-        }
-    },
-};
-
-jcomponent['filter-config-date'] = {
-    template: JDATA.tmpl['filter-config-date'],
-
-    props: {
-        item: Object
-    },
-
-    data: function() {
-        var startdate = this.item.config.startdate;
-        var endate = this.item.config.endate;
-
-        return {
-            startdate: startdate,
-            endate: endate
-        }
-    },
-
-    methods: {
-        updateTitle: function(value) {
-            this.$store.commit('updateConfig', {
-                id: this.item.id,
-                name: 'title',
-                value: value,
-            });
+        props: {
+            item: Object
         },
 
-        updateStartDate: function(value) {
-            this.$store.commit('updateConfig', {
-                id: this.item.id,
-                name: 'startdate',
-                value: value,
-            });
-        },
-
-        updateEndDate: function(value) {
-            this.$store.commit('updateConfig', {
-                id: this.item.id,
-                name: 'endate',
-                value: value,
-            });
-        },
-    }
-};
-
-jcomponent['filter-config-point'] = {
-    template: JDATA.tmpl['filter-config-point'],
-
-    props: {
-        points: Array,
-    },
-
-    data: function() {
-        var list = $.extend(true, [], this.points);
-        return {
-            list: list,
-        }
-    },
-
-    methods: {
-        addPoint: function() {
-            this.list.push('0');
-            this.$emit('change', $.extend(true, [], this.list));
-        },
-
-        updatePoint: function() {
-            this.$emit('change', $.extend(true, [], this.list));
-        }
-    },
-};
-
-jcomponent['filter-config-range-below'] = {
-    template: JDATA.tmpl['filter-config-range-below'],
-
-    components: {
-        'filter-config-point': jcomponent['filter-config-point'],
-    },
-
-    props: {
-        item: Object
-    },
-
-    methods: {
-        updateTitle: function(value) {
-            this.$store.commit('updateConfig', {
-                id: this.item.id,
-                name: 'title',
-                value: value,
-            });
-        },
-
-        updatePoint: function(points) {
-            this.$store.commit('updateConfig', {
-                id: this.item.id,
-                name: 'points',
-                value: points,
-            });
-        }
-    },
-};
-
-jcomponent['filter-config-range'] = {
-    template: JDATA.tmpl['filter-config-range'],
-
-    props: {
-        item: Object
-    },
-
-    data: function() {
-        var auto = this.item.config.auto;
-        return {
-            auto: auto,
-        }
-    },
-
-    methods: {
-        updateTitle: function(value) {
-            this.$store.commit('updateConfig', {
-                id: this.item.id,
-                name: 'title',
-                value: value,
-            });
-        },
-
-        updateAutoDetect: function(value) {
-            this.$store.commit('updateConfig', {
-                id: this.item.id,
-                name: 'auto',
-                value: value,
-            });
-        },
-
-        updateMin: function(value) {
-            this.$store.commit('updateConfig', {
-                id: this.item.id,
-                name: 'min',
-                value: value,
-            });
-        },
-
-        updateMax: function(value) {
-            this.$store.commit('updateConfig', {
-                id: this.item.id,
-                name: 'max',
-                value: value,
-            });
-        },
-
-        updateStep: function(value) {
-            this.$store.commit('updateConfig', {
-                id: this.item.id,
-                name: 'step',
-                value: value,
-            });
-        },
-    }
-};
-
-jcomponent['filter-config-selection'] = {
-    template: JDATA.tmpl['filter-config-selection'],
-
-    props: {
-        item: Object
-    },
-
-    data: function() {
-        var orderOptions = [
-            {
-                text: 'Ordering ASC',
-                value: 'ordering_asc',
+        methods: {
+            updateTitle: function(value) {
+                this.$store.commit('updateConfig', {
+                    id: this.item.id,
+                    name: 'title',
+                    value: value,
+                });
             },
-            {
-                text: 'Ordering DESC',
-                value: 'ordering_desc',
-            },
-            {
-                text: 'Count ASC',
-                value: 'count_asc',
-            },
-            {
-                text: 'Count DESC',
-                value: 'count_desc',
-            },
-            {
-                text: 'Name ASC',
-                value: 'name_asc',
-            },
-            {
-                text: 'Name DESC',
-                value: 'name_desc',
-            },
-        ];
 
-        return {
-            orderOptions: orderOptions,
-        }
-    },
-
-    methods: {
-        updateTitle: function(value) {
-            this.$store.commit('updateConfig', {
-                id: this.item.id,
-                name: 'title',
-                value: value,
-            });
-        },
-
-        updateCustomValue: function(value) {
-            this.$store.commit('updateConfig', {
-                id: this.item.id,
-                name: 'custom',
-                value: value,
-            });
-        },
-
-        updateOrdering: function(value) {
-            this.$store.commit('updateConfig', {
-                id: this.item.id,
-                name: 'ordering',
-                value: value,
-            });
-        }
-    }
-};
-
-jcomponent['filter-config-text'] = {
-    template: JDATA.tmpl['filter-config-text'],
-
-    props: {
-        item: Object
-    },
-
-    methods: {
-        updateTitle: function(value) {
-            this.$store.commit('updateConfig', {
-                id: this.item.id,
-                name: 'title',
-                value: value,
-            });
-        },
-
-        updateMaxLength: function(value) {
-            this.$store.commit('updateConfig', {
-                id: this.item.id,
-                name: 'maxlength',
-                value: value,
-            });
-        }
-    }
-};
-
-jcomponent['filter-config'] = {
-    template: JDATA.tmpl['filter-config'],
-
-    components: {
-        'filter-config-text': jcomponent['filter-config-text'],
-        'filter-config-selection': jcomponent['filter-config-selection'],
-        'filter-config-date': jcomponent['filter-config-date'],
-        'filter-config-range': jcomponent['filter-config-range'],
-        'filter-config-range-below': jcomponent['filter-config-range-below'],
-        'filter-config-color': jcomponent['filter-config-color'],
-    },
-
-    computed: {
-        item: function () {
-            var activeFilter = this.$store.state.activeFilter;
-            var filters = this.$store.state.value.filters;
-
-            return filters.find(function(filter) {
-                return filter.id === activeFilter;
-            });
-        },
-    },
-
-    methods: {
-        changeTemplate: function (value) {
-            this.$store.commit('changeFilterTemplate', {
-                id: this.item.id,
-                template: value,
-            });
-        }
-    }
-};
-
-jcomponent['filter-list'] = {
-    template: JDATA.tmpl['filter-list'],
-
-    components: {
-        'filter-list-item': jcomponent['filter-list-item']
-    },
-
-    computed: {
-        list: function() {
-            return this.$store.state.value.filters;
-        },
-
-        active: function() {
-            return this.$store.state.activeFilter;
-        },
-    },
-
-    methods: {
-        setActive: function(id) {
-            this.$store.commit('setActiveFilter', id);
-        },
-
-        duplicateFilter: function(filter) {
-            this.$store.commit('duplicateFilter', filter);
-        },
-
-        deleteFilter: function(id) {
-            if (this.active === id) {
-                this.$store.commit('setActiveFilter', '');
+            updateCustom: function(points) {
+                this.$store.commit('updateConfig', {
+                    id: this.item.id,
+                    name: 'custom',
+                    value: points,
+                });
             }
+        },
+    }
+};
 
-            this.$store.commit('deleteFilter', id);
+jcomponent['filter-config-date'] = function() {
+    return {
+        template: JDATA.tmpl['filter-config-date'],
+
+        props: {
+            item: Object
+        },
+
+        data: function() {
+            var startdate = this.item.config.startdate;
+            var endate = this.item.config.endate;
+
+            return {
+                startdate: startdate,
+                endate: endate
+            }
+        },
+
+        methods: {
+            updateTitle: function(value) {
+                this.$store.commit('updateConfig', {
+                    id: this.item.id,
+                    name: 'title',
+                    value: value,
+                });
+            },
+
+            updateStartDate: function(value) {
+                this.$store.commit('updateConfig', {
+                    id: this.item.id,
+                    name: 'startdate',
+                    value: value,
+                });
+            },
+
+            updateEndDate: function(value) {
+                this.$store.commit('updateConfig', {
+                    id: this.item.id,
+                    name: 'endate',
+                    value: value,
+                });
+            },
+        }
+    }
+};
+
+jcomponent['filter-config-point'] = function() {
+    return {
+        template: JDATA.tmpl['filter-config-point'],
+
+        props: {
+            points: Array,
+        },
+
+        data: function() {
+            var list = $.extend(true, [], this.points);
+            return {
+                list: list,
+            }
+        },
+
+        methods: {
+            addPoint: function() {
+                this.list.push('0');
+                this.$emit('change', $.extend(true, [], this.list));
+            },
+
+            updatePoint: function() {
+                this.$emit('change', $.extend(true, [], this.list));
+            },
+
+            removePoint: function(index) {
+                this.list.splice(index, 1);
+                this.$emit('change', $.extend(true, [], this.list));
+            }
+        },
+    }
+};
+
+jcomponent['filter-config-range-below'] = function() {
+    return {
+        template: JDATA.tmpl['filter-config-range-below'],
+
+        components: {
+            'filter-config-point': jcomponent['filter-config-point'](),
+        },
+
+        props: {
+            item: Object
+        },
+
+        methods: {
+            updateTitle: function(value) {
+                this.$store.commit('updateConfig', {
+                    id: this.item.id,
+                    name: 'title',
+                    value: value,
+                });
+            },
+
+            updatePoint: function(points) {
+                this.$store.commit('updateConfig', {
+                    id: this.item.id,
+                    name: 'points',
+                    value: points,
+                });
+            }
+        },
+    }
+};
+
+jcomponent['filter-config-range'] = function() {
+    return {
+        template: JDATA.tmpl['filter-config-range'],
+
+        props: {
+            item: Object
+        },
+
+        data: function() {
+            var auto = this.item.config.auto;
+            return {
+                auto: auto,
+            }
+        },
+
+        methods: {
+            updateTitle: function(value) {
+                this.$store.commit('updateConfig', {
+                    id: this.item.id,
+                    name: 'title',
+                    value: value,
+                });
+            },
+
+            updateAutoDetect: function(value) {
+                this.$store.commit('updateConfig', {
+                    id: this.item.id,
+                    name: 'auto',
+                    value: value,
+                });
+            },
+
+            updateMin: function(value) {
+                this.$store.commit('updateConfig', {
+                    id: this.item.id,
+                    name: 'min',
+                    value: value,
+                });
+            },
+
+            updateMax: function(value) {
+                this.$store.commit('updateConfig', {
+                    id: this.item.id,
+                    name: 'max',
+                    value: value,
+                });
+            },
+
+            updateStep: function(value) {
+                this.$store.commit('updateConfig', {
+                    id: this.item.id,
+                    name: 'step',
+                    value: value,
+                });
+            },
+        }
+    }
+};
+
+jcomponent['filter-config-selection'] = function() {
+    return {
+        template: JDATA.tmpl['filter-config-selection'],
+
+        props: {
+            item: Object
+        },
+
+        data: function() {
+            var orderOptions = [
+                {
+                    text: 'Ordering ASC',
+                    value: 'ordering_asc',
+                },
+                {
+                    text: 'Ordering DESC',
+                    value: 'ordering_desc',
+                },
+                {
+                    text: 'Count ASC',
+                    value: 'count_asc',
+                },
+                {
+                    text: 'Count DESC',
+                    value: 'count_desc',
+                },
+                {
+                    text: 'Name ASC',
+                    value: 'name_asc',
+                },
+                {
+                    text: 'Name DESC',
+                    value: 'name_desc',
+                },
+            ];
+
+            return {
+                orderOptions: orderOptions,
+            }
+        },
+
+        methods: {
+            updateTitle: function(value) {
+                this.$store.commit('updateConfig', {
+                    id: this.item.id,
+                    name: 'title',
+                    value: value,
+                });
+            },
+
+            updateCustomValue: function(value) {
+                this.$store.commit('updateConfig', {
+                    id: this.item.id,
+                    name: 'custom',
+                    value: value,
+                });
+            },
+
+            updateOrdering: function(value) {
+                this.$store.commit('updateConfig', {
+                    id: this.item.id,
+                    name: 'ordering',
+                    value: value,
+                });
+            }
+        }
+    }
+};
+
+jcomponent['filter-config-text'] = function() {
+    return {
+        template: JDATA.tmpl['filter-config-text'],
+
+        props: {
+            item: Object
+        },
+
+        methods: {
+            updateTitle: function(value) {
+                this.$store.commit('updateConfig', {
+                    id: this.item.id,
+                    name: 'title',
+                    value: value,
+                });
+            },
+
+            updateMaxLength: function(value) {
+                this.$store.commit('updateConfig', {
+                    id: this.item.id,
+                    name: 'maxlength',
+                    value: value,
+                });
+            }
+        }
+    }
+};
+
+jcomponent['filter-config'] = function() {
+    return {
+        template: JDATA.tmpl['filter-config'],
+
+        components: {
+            'filter-config-text': jcomponent['filter-config-text'](),
+            'filter-config-selection': jcomponent['filter-config-selection'](),
+            'filter-config-date': jcomponent['filter-config-date'](),
+            'filter-config-range': jcomponent['filter-config-range'](),
+            'filter-config-range-below': jcomponent['filter-config-range-below'](),
+            'filter-config-color': jcomponent['filter-config-color'](),
+        },
+
+        computed: {
+            item: function () {
+                var activeFilter = this.$store.state.activeFilter;
+                var filters = this.$store.state.value.filters;
+
+                return filters.find(function(filter) {
+                    return filter.id === activeFilter;
+                });
+            },
+        },
+
+        methods: {
+            changeTemplate: function (value) {
+                this.$store.commit('changeFilterTemplate', {
+                    id: this.item.id,
+                    template: value,
+                });
+            }
+        }
+    }
+};
+
+jcomponent['filter-list'] = function() {
+    return {
+        template: JDATA.tmpl['filter-list'],
+
+        components: {
+            'filter-list-item': jcomponent['filter-list-item']
+        },
+
+        computed: {
+            list: function() {
+                return this.$store.state.value.filters;
+            },
+
+            active: function() {
+                return this.$store.state.activeFilter;
+            },
+        },
+
+        methods: {
+            setActive: function(id) {
+                this.$store.commit('setActiveFilter', id);
+            },
+
+            duplicateFilter: function(filter) {
+                this.$store.commit('duplicateFilter', filter);
+            },
+
+            deleteFilter: function(id) {
+                if (this.active === id) {
+                    this.$store.commit('setActiveFilter', '');
+                }
+
+                this.$store.commit('deleteFilter', id);
+            }
         }
     }
 };

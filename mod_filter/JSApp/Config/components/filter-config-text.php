@@ -22,28 +22,30 @@
 <!-- end-template -->
 
 <script>
-jcomponent['filter-config-text'] = {
-    template: JDATA.tmpl['filter-config-text'],
+jcomponent['filter-config-text'] = function() {
+    return {
+        template: JDATA.tmpl['filter-config-text'],
 
-    props: {
-        item: Object
-    },
-
-    methods: {
-        updateTitle: function(value) {
-            this.$store.commit('updateConfig', {
-                id: this.item.id,
-                name: 'title',
-                value: value,
-            });
+        props: {
+            item: Object
         },
 
-        updateMaxLength: function(value) {
-            this.$store.commit('updateConfig', {
-                id: this.item.id,
-                name: 'maxlength',
-                value: value,
-            });
+        methods: {
+            updateTitle: function(value) {
+                this.$store.commit('updateConfig', {
+                    id: this.item.id,
+                    name: 'title',
+                    value: value,
+                });
+            },
+
+            updateMaxLength: function(value) {
+                this.$store.commit('updateConfig', {
+                    id: this.item.id,
+                    name: 'maxlength',
+                    value: value,
+                });
+            }
         }
     }
 };

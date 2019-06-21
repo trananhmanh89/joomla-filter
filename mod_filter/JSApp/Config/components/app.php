@@ -41,10 +41,10 @@ var initApp = function initApp() {
         template: JDATA.tmpl.app,
 
         components: {
-            'filter-add': jcomponent['filter-add'],
-            'filter-list': jcomponent['filter-list'],
-            'filter-config': jcomponent['filter-config'],
-            'filter-app': jcomponent['filter-app'],
+            'filter-add': jcomponent['filter-add'](),
+            'filter-list': jcomponent['filter-list'](),
+            'filter-config': jcomponent['filter-config'](),
+            'filter-app': jcomponent['filter-app'](),
         },
 
         store: store,

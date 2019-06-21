@@ -19,25 +19,27 @@
 <!-- end-template -->
 
 <script>
-jcomponent['filter-app'] = {
-    template: JDATA.tmpl['filter-app'],
+jcomponent['filter-app'] = function() {
+    return {
+        template: JDATA.tmpl['filter-app'],
 
-    data: function () {
-        var appid = this.$store.state.value.appid;
-        return {
-            appid: appid,
-        }
-    },
-
-    computed: {
-        apps: function () {
-            return this.$store.state.apps;
+        data: function () {
+            var appid = this.$store.state.value.appid;
+            return {
+                appid: appid,
+            }
         },
-    },
 
-    methods: {
-        changeFilterApp: function () {
-            this.$store.commit('changeFilterApp', this.appid);
+        computed: {
+            apps: function () {
+                return this.$store.state.apps;
+            },
+        },
+
+        methods: {
+            changeFilterApp: function () {
+                this.$store.commit('changeFilterApp', this.appid);
+            }
         }
     }
 }

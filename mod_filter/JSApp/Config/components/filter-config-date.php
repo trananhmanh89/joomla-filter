@@ -35,47 +35,49 @@
 <!-- end-template -->
 
 <script>
-jcomponent['filter-config-date'] = {
-    template: JDATA.tmpl['filter-config-date'],
+jcomponent['filter-config-date'] = function() {
+    return {
+        template: JDATA.tmpl['filter-config-date'],
 
-    props: {
-        item: Object
-    },
+        props: {
+            item: Object
+        },
 
-    data: function() {
-        var startdate = this.item.config.startdate;
-        var endate = this.item.config.endate;
+        data: function() {
+            var startdate = this.item.config.startdate;
+            var endate = this.item.config.endate;
 
-        return {
-            startdate: startdate,
-            endate: endate
+            return {
+                startdate: startdate,
+                endate: endate
+            }
+        },
+
+        methods: {
+            updateTitle: function(value) {
+                this.$store.commit('updateConfig', {
+                    id: this.item.id,
+                    name: 'title',
+                    value: value,
+                });
+            },
+
+            updateStartDate: function(value) {
+                this.$store.commit('updateConfig', {
+                    id: this.item.id,
+                    name: 'startdate',
+                    value: value,
+                });
+            },
+
+            updateEndDate: function(value) {
+                this.$store.commit('updateConfig', {
+                    id: this.item.id,
+                    name: 'endate',
+                    value: value,
+                });
+            },
         }
-    },
-
-    methods: {
-        updateTitle: function(value) {
-            this.$store.commit('updateConfig', {
-                id: this.item.id,
-                name: 'title',
-                value: value,
-            });
-        },
-
-        updateStartDate: function(value) {
-            this.$store.commit('updateConfig', {
-                id: this.item.id,
-                name: 'startdate',
-                value: value,
-            });
-        },
-
-        updateEndDate: function(value) {
-            this.$store.commit('updateConfig', {
-                id: this.item.id,
-                name: 'endate',
-                value: value,
-            });
-        },
     }
 };
 </script>

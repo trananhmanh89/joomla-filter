@@ -20,7 +20,7 @@
         </el-switch>
     </div>
     
-    <div v-show="item.config.auto">
+    <div v-show="!item.config.auto">
         <p>Min</p>
         <el-input
             placeholder="Title"
@@ -29,7 +29,7 @@
         </el-input>
     </div>
     
-    <div v-show="item.config.auto">
+    <div v-show="!item.config.auto">
         <p>Max</p>
         <el-input
             placeholder="Title"
@@ -38,7 +38,7 @@
         </el-input>
     </div>
 
-    <div v-show="item.config.auto">
+    <div v-show="!item.config.auto">
         <p>Step</p>
         <el-input
             placeholder="Title"
@@ -51,60 +51,62 @@
 <!-- end-template -->
 
 <script>
-jcomponent['filter-config-range'] = {
-    template: JDATA.tmpl['filter-config-range'],
+jcomponent['filter-config-range'] = function() {
+    return {
+        template: JDATA.tmpl['filter-config-range'],
 
-    props: {
-        item: Object
-    },
+        props: {
+            item: Object
+        },
 
-    data: function() {
-        var auto = this.item.config.auto;
-        return {
-            auto: auto,
+        data: function() {
+            var auto = this.item.config.auto;
+            return {
+                auto: auto,
+            }
+        },
+
+        methods: {
+            updateTitle: function(value) {
+                this.$store.commit('updateConfig', {
+                    id: this.item.id,
+                    name: 'title',
+                    value: value,
+                });
+            },
+
+            updateAutoDetect: function(value) {
+                this.$store.commit('updateConfig', {
+                    id: this.item.id,
+                    name: 'auto',
+                    value: value,
+                });
+            },
+
+            updateMin: function(value) {
+                this.$store.commit('updateConfig', {
+                    id: this.item.id,
+                    name: 'min',
+                    value: value,
+                });
+            },
+
+            updateMax: function(value) {
+                this.$store.commit('updateConfig', {
+                    id: this.item.id,
+                    name: 'max',
+                    value: value,
+                });
+            },
+
+            updateStep: function(value) {
+                this.$store.commit('updateConfig', {
+                    id: this.item.id,
+                    name: 'step',
+                    value: value,
+                });
+            },
         }
-    },
-
-    methods: {
-        updateTitle: function(value) {
-            this.$store.commit('updateConfig', {
-                id: this.item.id,
-                name: 'title',
-                value: value,
-            });
-        },
-
-        updateAutoDetect: function(value) {
-            this.$store.commit('updateConfig', {
-                id: this.item.id,
-                name: 'auto',
-                value: value,
-            });
-        },
-
-        updateMin: function(value) {
-            this.$store.commit('updateConfig', {
-                id: this.item.id,
-                name: 'min',
-                value: value,
-            });
-        },
-
-        updateMax: function(value) {
-            this.$store.commit('updateConfig', {
-                id: this.item.id,
-                name: 'max',
-                value: value,
-            });
-        },
-
-        updateStep: function(value) {
-            this.$store.commit('updateConfig', {
-                id: this.item.id,
-                name: 'step',
-                value: value,
-            });
-        },
     }
 };
 </script>

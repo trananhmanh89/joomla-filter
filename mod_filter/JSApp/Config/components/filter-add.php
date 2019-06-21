@@ -51,57 +51,59 @@
 <!-- end-template -->
 
 <script>
-jcomponent['filter-add'] = {
-    template: JDATA.tmpl['filter-add'],
-    
-    data: function() {
-        return {
-            dialogVisible: false,
-            categoryId: 'all',
-        };
-    },
-
-    computed: {
-        baseFields: function() {
-            var fields = this.$store.state.fields;
-
-            return fields.filter(function(field) {
-                return field.group === 'base';
-            });
+jcomponent['filter-add'] = function() {
+    return {
+        template: JDATA.tmpl['filter-add'],
+        
+        data: function() {
+            return {
+                dialogVisible: false,
+                categoryId: 'all',
+            };
         },
 
-        customFields: function() {
-            var fields = this.$store.state.fields;
-            var categoryId = this.categoryId;
-            return fields.filter(function(field) {
-                if (field.group !== 'custom') {
-                    return false;
+        computed: {
+            baseFields: function() {
+                var fields = this.$store.state.fields;
+
+                return fields.filter(function(field) {
+                    return field.group === 'base';
+                });
+            },
+
+            customFields: function() {
+                var fields = this.$store.state.fields;
+                var categoryId = this.categoryId;
+                return fields.filter(function(field) {
+                    if (field.group !== 'custom') {
+                        return false;
+                    }
+
+                    return categoryId === 'all' 
+                        || !field.category.length 
+                        || field.category.indexOf(categoryId) > -1;
+                });
+            },
+
+            categories: function() {
+                return this.$store.state.categories;
+            },
+
+            added: function() {
+                var filters = this.$store.state.value.filters;
+                var added = filters.map(function(item) {
+                    return item.name;
+                });
+
+                return added;
+            }
+        },
+
+        methods: {
+            addFilter: function(field) {
+                if (this.added.indexOf(field.name) === -1) {
+                    this.$store.commit('addFilter', field);
                 }
-
-                return categoryId === 'all' 
-                    || !field.category.length 
-                    || field.category.indexOf(categoryId) > -1;
-            });
-        },
-
-        categories: function() {
-            return this.$store.state.categories;
-        },
-
-        added: function() {
-            var filters = this.$store.state.value.filters;
-            var added = filters.map(function(item) {
-                return item.name;
-            });
-
-            return added;
-        }
-    },
-
-    methods: {
-        addFilter: function(field) {
-            if (this.added.indexOf(field.name) === -1) {
-                this.$store.commit('addFilter', field);
             }
         }
     }

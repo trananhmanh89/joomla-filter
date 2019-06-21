@@ -38,69 +38,71 @@
 <!-- end-template -->
 
 <script>
-jcomponent['filter-config-selection'] = {
-    template: JDATA.tmpl['filter-config-selection'],
+jcomponent['filter-config-selection'] = function() {
+    return {
+        template: JDATA.tmpl['filter-config-selection'],
 
-    props: {
-        item: Object
-    },
-
-    data: function() {
-        var orderOptions = [
-            {
-                text: 'Ordering ASC',
-                value: 'ordering_asc',
-            },
-            {
-                text: 'Ordering DESC',
-                value: 'ordering_desc',
-            },
-            {
-                text: 'Count ASC',
-                value: 'count_asc',
-            },
-            {
-                text: 'Count DESC',
-                value: 'count_desc',
-            },
-            {
-                text: 'Name ASC',
-                value: 'name_asc',
-            },
-            {
-                text: 'Name DESC',
-                value: 'name_desc',
-            },
-        ];
-
-        return {
-            orderOptions: orderOptions,
-        }
-    },
-
-    methods: {
-        updateTitle: function(value) {
-            this.$store.commit('updateConfig', {
-                id: this.item.id,
-                name: 'title',
-                value: value,
-            });
+        props: {
+            item: Object
         },
 
-        updateCustomValue: function(value) {
-            this.$store.commit('updateConfig', {
-                id: this.item.id,
-                name: 'custom',
-                value: value,
-            });
+        data: function() {
+            var orderOptions = [
+                {
+                    text: 'Ordering ASC',
+                    value: 'ordering_asc',
+                },
+                {
+                    text: 'Ordering DESC',
+                    value: 'ordering_desc',
+                },
+                {
+                    text: 'Count ASC',
+                    value: 'count_asc',
+                },
+                {
+                    text: 'Count DESC',
+                    value: 'count_desc',
+                },
+                {
+                    text: 'Name ASC',
+                    value: 'name_asc',
+                },
+                {
+                    text: 'Name DESC',
+                    value: 'name_desc',
+                },
+            ];
+
+            return {
+                orderOptions: orderOptions,
+            }
         },
 
-        updateOrdering: function(value) {
-            this.$store.commit('updateConfig', {
-                id: this.item.id,
-                name: 'ordering',
-                value: value,
-            });
+        methods: {
+            updateTitle: function(value) {
+                this.$store.commit('updateConfig', {
+                    id: this.item.id,
+                    name: 'title',
+                    value: value,
+                });
+            },
+
+            updateCustomValue: function(value) {
+                this.$store.commit('updateConfig', {
+                    id: this.item.id,
+                    name: 'custom',
+                    value: value,
+                });
+            },
+
+            updateOrdering: function(value) {
+                this.$store.commit('updateConfig', {
+                    id: this.item.id,
+                    name: 'ordering',
+                    value: value,
+                });
+            }
         }
     }
 };
