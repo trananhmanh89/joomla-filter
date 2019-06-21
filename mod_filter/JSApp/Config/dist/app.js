@@ -139,12 +139,49 @@ jcomponent['filter-config-color'] = function() {
                 });
             },
 
-            updateCustom: function(points) {
+            updateColor: function(points) {
                 this.$store.commit('updateConfig', {
                     id: this.item.id,
-                    name: 'custom',
+                    name: 'color',
                     value: points,
                 });
+            }
+        },
+    }
+};
+
+jcomponent['filter-config-custom-value'] = function() {
+    return {
+        template: JDATA.tmpl['filter-config-custom-value'],
+
+        props: {
+            options: Array,
+        },
+
+        data: function() {
+            var list = $.extend(true, [], this.options);
+            return {
+                list: list,
+            }
+        },
+
+        methods: {
+            addItem: function() {
+                this.list.push({
+                    value: '',
+                    text: '',
+                });
+
+                this.$emit('change', $.extend(true, [], this.list));
+            },
+
+            updateItem: function() {
+                this.$emit('change', $.extend(true, [], this.list));
+            },
+
+            removeItem: function(index) {
+                this.list.splice(index, 1);
+                this.$emit('change', $.extend(true, [], this.list));
             }
         },
     }
@@ -213,7 +250,7 @@ jcomponent['filter-config-point'] = function() {
 
         methods: {
             addPoint: function() {
-                this.list.push('0');
+                this.list.push('');
                 this.$emit('change', $.extend(true, [], this.list));
             },
 
@@ -324,6 +361,10 @@ jcomponent['filter-config-selection'] = function() {
     return {
         template: JDATA.tmpl['filter-config-selection'],
 
+        components: {
+            'filter-config-custom-value': jcomponent['filter-config-custom-value'](),
+        },
+
         props: {
             item: Object
         },
@@ -382,6 +423,23 @@ jcomponent['filter-config-selection'] = function() {
                 this.$store.commit('updateConfig', {
                     id: this.item.id,
                     name: 'ordering',
+                    value: value,
+                });
+            },
+
+
+            updateCustom: function(value) {
+                this.$store.commit('updateConfig', {
+                    id: this.item.id,
+                    name: 'custom',
+                    value: value,
+                });
+            },
+
+            updateCustomValue: function(value) {
+                this.$store.commit('updateConfig', {
+                    id: this.item.id,
+                    name: 'values',
                     value: value,
                 });
             }

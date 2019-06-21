@@ -75,7 +75,8 @@
         },
         "selection": {
             "title": "Selection",
-            "custom": "",
+            "custom": false,
+            "values": [],
             "ordering": "ordering_asc"
         },
         "range": {
@@ -91,7 +92,7 @@
         },    
         "color": {
             "title": "Color",
-            "custom": []
+            "color": []
         }
     }
 }

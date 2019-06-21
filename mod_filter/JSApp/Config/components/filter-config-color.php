@@ -13,8 +13,8 @@
     <div>
         <p>Color</p>
         <filter-config-point 
-            :points="item.config.custom"
-            @change="updateCustom">
+            :points="item.config.color"
+            @change="updateColor">
         </filter-config-point>
     </div>
 </div>
@@ -42,10 +42,10 @@ jcomponent['filter-config-color'] = function() {
                 });
             },
 
-            updateCustom: function(points) {
+            updateColor: function(points) {
                 this.$store.commit('updateConfig', {
                     id: this.item.id,
-                    name: 'custom',
+                    name: 'color',
                     value: points,
                 });
             }

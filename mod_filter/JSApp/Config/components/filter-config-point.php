@@ -9,14 +9,15 @@
     </el-button>
     <div v-for="(point, index) in list">
         <input 
-            type="number" 
+            type="text" 
             v-model="list[index]"
             @input="updatePoint" />
         <el-button 
             type="danger" 
             size="mini"
             icon="el-icon-delete" 
-            circle @click="removePoint(index)"></el-button>
+            circle @click="removePoint(index)">
+        </el-button>
     </div>
 </div>
 <!-- end-template -->
@@ -39,7 +40,7 @@ jcomponent['filter-config-point'] = function() {
 
         methods: {
             addPoint: function() {
-                this.list.push('0');
+                this.list.push('');
                 this.$emit('change', $.extend(true, [], this.list));
             },
 

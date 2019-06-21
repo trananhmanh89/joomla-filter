@@ -11,12 +11,21 @@
     </div>
 
     <div>
-        <p>Custom value</p>
-        <el-input
-            placeholder="Custom value"
-            :value="item.config.custom"
-            @input="updateCustomValue">
-        </el-input>
+        <p>Allow Custom Value</p>
+        <el-switch
+            :value="!!item.config.custom"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
+            @change="updateCustom">
+        </el-switch>
+    </div>
+
+    <div v-show="item.config.custom">
+        <p>Custom Values</p>
+        <filter-config-custom-value
+            :options="item.config.values"
+            @change="updateCustomValue">
+        </filter-config-custom-value>
     </div>
 
     <div>
@@ -41,6 +50,10 @@
 jcomponent['filter-config-selection'] = function() {
     return {
         template: JDATA.tmpl['filter-config-selection'],
+
+        components: {
+            'filter-config-custom-value': jcomponent['filter-config-custom-value'](),
+        },
 
         props: {
             item: Object
@@ -100,6 +113,23 @@ jcomponent['filter-config-selection'] = function() {
                 this.$store.commit('updateConfig', {
                     id: this.item.id,
                     name: 'ordering',
+                    value: value,
+                });
+            },
+
+
+            updateCustom: function(value) {
+                this.$store.commit('updateConfig', {
+                    id: this.item.id,
+                    name: 'custom',
+                    value: value,
+                });
+            },
+
+            updateCustomValue: function(value) {
+                this.$store.commit('updateConfig', {
+                    id: this.item.id,
+                    name: 'values',
                     value: value,
                 });
             }
