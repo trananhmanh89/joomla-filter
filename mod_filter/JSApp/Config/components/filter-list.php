@@ -29,7 +29,7 @@ jcomponent['filter-list'] = function() {
             },
 
             active: function() {
-                return this.$store.state.activeFilter;
+                return this.$store.state.activeFilterId;
             },
         },
 

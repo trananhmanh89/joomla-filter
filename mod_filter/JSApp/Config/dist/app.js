@@ -491,11 +491,11 @@ jcomponent['filter-config'] = function() {
 
         computed: {
             item: function () {
-                var activeFilter = this.$store.state.activeFilter;
+                var activeFilterId = this.$store.state.activeFilterId;
                 var filters = this.$store.state.value.filters;
 
                 return filters.find(function(filter) {
-                    return filter.id === activeFilter;
+                    return filter.id === activeFilterId;
                 });
             },
         },
@@ -543,7 +543,7 @@ jcomponent['filter-list'] = function() {
             },
 
             active: function() {
-                return this.$store.state.activeFilter;
+                return this.$store.state.activeFilterId;
             },
         },
 
@@ -578,19 +578,32 @@ var getAppStore = function getAppStore(JDATA) {
     );
 
     var sessionKey = location.href + '_activeFilter';
-    var activeFilter = '';
+    var activeFilterId = '';
     if (sessionStorage.getItem(sessionKey)) {
-        activeFilter = sessionStorage.getItem(sessionKey);
-    } else {
-        activeFilter = value.filters[0] ? value.filters[0].id : '';
+        var val = sessionStorage.getItem(sessionKey);
+        var existed = value.filters.find(function(f) {
+            return f.id === val;
+        });
+        
+        if (existed) {
+            activeFilterId = val;
+        }
     }
+
+    if (!activeFilterId) {
+        activeFilterId = value.filters[0] ? value.filters[0].id : '';
+    }
+
+    var currentApp = JDATA.apps.find(function(a) {
+        return a.id === value.appid;
+    });
 
     return new Vuex.Store({
         strict: true,
 
         state: {
-            activeFilter: activeFilter,
-            currentApp: JDATA.apps[0],
+            activeFilterId: activeFilterId,
+            currentApp: currentApp || JDATA.apps[0],
             apps: JDATA.apps,
             fields: JDATA.fields,
             categories: JDATA.categories,
@@ -638,7 +651,7 @@ var getAppStore = function getAppStore(JDATA) {
 
             changeFilterApp: function(state, value) {
                 state.value.appid = value;
-                state.activeFilter = '';
+                state.activeFilterId = '';
                 var currentApp = state.apps.find(function(app) {
                     return app.id === value;
                 });
@@ -650,7 +663,7 @@ var getAppStore = function getAppStore(JDATA) {
             },
 
             setActiveFilter: function(state, filterId) {
-                state.activeFilter = filterId;
+                state.activeFilterId = filterId;
 
                 sessionStorage.setItem(sessionKey, filterId);
             },

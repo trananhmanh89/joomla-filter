@@ -54,7 +54,7 @@
             "type": "range-below",
             "name": "range-below",
             "title": "Range Below",
-            "template": "v-filter-item-range-below"
+            "template": "filter-item-range-below"
         },
         {
             "type": "color",

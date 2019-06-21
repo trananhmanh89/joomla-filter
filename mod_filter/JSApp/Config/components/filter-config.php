@@ -71,11 +71,11 @@ jcomponent['filter-config'] = function() {
 
         computed: {
             item: function () {
-                var activeFilter = this.$store.state.activeFilter;
+                var activeFilterId = this.$store.state.activeFilterId;
                 var filters = this.$store.state.value.filters;
 
                 return filters.find(function(filter) {
-                    return filter.id === activeFilter;
+                    return filter.id === activeFilterId;
                 });
             },
         },
