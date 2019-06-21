@@ -5,7 +5,7 @@
         {
             "type": "text",
             "name": "text",
-            "title": "text",
+            "title": "Text",
             "template": "v-filter-item-text"
         },
         {
