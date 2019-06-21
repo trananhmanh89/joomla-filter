@@ -14,7 +14,6 @@
         <p>Auto detect limit</p>
         <el-switch
             :value="item.config.auto"
-            active-color="#13ce66"
             inactive-color="#ff4949"
             @change="updateAutoDetect">
         </el-switch>

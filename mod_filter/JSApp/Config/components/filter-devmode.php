@@ -5,7 +5,6 @@
     <div>
         <el-switch
             :value="devmode"
-            active-color="#13ce66"
             inactive-color="#ff4949"
             @change="changeDevMode">
         </el-switch>

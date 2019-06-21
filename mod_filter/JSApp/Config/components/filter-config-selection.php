@@ -14,7 +14,6 @@
         <p>Allow Custom Value</p>
         <el-switch
             :value="!!item.config.custom"
-            active-color="#13ce66"
             inactive-color="#ff4949"
             @change="updateCustom">
         </el-switch>
