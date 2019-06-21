@@ -9,7 +9,13 @@ var getAppStore = function getAppStore(JDATA) {
         JDATA.value
     );
 
-    var activeFilter = value.filters[0] ? value.filters[0].id : '';
+    var sessionKey = location.href + '_activeFilter';
+    var activeFilter = '';
+    if (sessionStorage.getItem(sessionKey)) {
+        activeFilter = sessionStorage.getItem(sessionKey);
+    } else {
+        activeFilter = value.filters[0] ? value.filters[0].id : '';
+    }
 
     return new Vuex.Store({
         strict: true,
@@ -73,6 +79,8 @@ var getAppStore = function getAppStore(JDATA) {
 
             setActiveFilter: function(state, filterId) {
                 state.activeFilter = filterId;
+
+                sessionStorage.setItem(sessionKey, filterId);
             },
 
             duplicateFilter: function(state, filter) {
